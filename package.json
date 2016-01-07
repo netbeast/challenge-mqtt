@@ -1,0 +1,25 @@
+{
+  "name": "netbeast-challenge",
+  "version": "1.0.0",
+  "description": "Create a notifications module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netbeast/challenge-mqtt.git"
+  },
+  "author": "jesus@netbeast.co",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/netbeast/challenge-mqtt/issues"
+  },
+  "homepage": "https://github.com/netbeast/challenge-mqtt#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "minimist": "^1.2.0",
+    "mosca": "^0.32.1"
+  }
+}

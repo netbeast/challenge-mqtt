@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <style media="screen">
+      body, html {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h2>Netbeast developer challenge</h2>
+    <h2>There is a MQTT over Websockets (HTTP) server running on port 8000</h2>
+
+    <!-- vendor scripts -->
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="/mosca/mqtt.js"></script>
+
+    <script>
+      var client = mqtt.connect()
+
+      client.subscribe("mqtt/demo")
+
+      client.on("message", function(topic, payload) {
+        toastr.success([topic, payload].join(": "))
+      })
+
+      client.publish("mqtt/demo", "hello world!")
+    </script>
+  </body>
+</html>
