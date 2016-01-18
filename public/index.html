@@ -24,7 +24,7 @@
       client.subscribe("mqtt/demo")
 
       client.on("message", function(topic, payload) {
-        alert([topic, payload].join(": "))
+	 var notification = new Notification(topic, { body: payload })
       })
 
       client.publish("mqtt/demo", "hello world!")
