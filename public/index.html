@@ -24,10 +24,35 @@
       client.subscribe("mqtt/demo")
 
       client.on("message", function(topic, payload) {
-        toastr.success([topic, payload].join(": "))
-      })
+	
+		
+	if (window.Notifications) //compruebo si existe
+	  toastr.info([topic, payload].join(": "));
+	else if (Notification.permission === "granted") //si existe y tiene permisos
+	  var notification = new Notification(topic, { body: payload })
+	else if (Notification.permission !== "denied") { //si existe y no tiene permisos
 
-      client.publish("mqtt/demo", "hello world!")
+		Notification.requestPermission(function (permission) {  //se pide permiso
+					       if (!('permission' in Notification))
+					       Notification.permission = permission;
+
+					       if (permission === "granted"){ //si se le da permiso
+					       var notification = new Notification(topic, { body: payload })
+					       }
+					       else{			      //si no se le da permiso
+					       toastr.info([topic, payload].join(": "));
+					       }
+					       
+					       });
+      }
+      else{
+	//cuando no se le da permiso (en requestPermission) window.Notifications "deja de existir"
+	//sigo mandando las notificaciones con toastr
+	toastr.info([topic, payload].join(": "));
+      }
+    })
+
+      
     </script>
   </body>
 </html>
