@@ -26,8 +26,8 @@
       client.on("message", function(topic, payload) {
         // Comprobamos si existe
         if (!("Notification" in window)) {
-          // Si no existe mandamos una alerta
-          alert("This browser does not support desktop notification");
+          // Si no existe lo mandamos con toaster
+          //toastr.info([topic, payload].join(": "));
         }
         // Si existe...
         else if (Notification.permission === "granted") { // y tiene permiso
@@ -47,9 +47,13 @@
               }
               var notification = new Notification(topic,options);
             }
+            // Si no nos da permiso, mandamos con toaster
+            else
+              toastr.info([topic, payload].join(": "));
           });
-        
-      })
+        }
+      });
+
     client.publish("mqtt/demo", "Notificación enviada");
     </script>
   </body>
