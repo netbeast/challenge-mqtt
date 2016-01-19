@@ -24,10 +24,33 @@
       client.subscribe("mqtt/demo")
 
       client.on("message", function(topic, payload) {
-        toastr.success([topic, payload].join(": "))
+        // Comprobamos si existe
+        if (!("Notification" in window)) {
+          // Si no existe mandamos una alerta
+          alert("This browser does not support desktop notification");
+        }
+        // Si existe...
+        else if (Notification.permission === "granted") { // y tiene permiso
+          // Creamos la notificación
+          var options = {
+            body: payload
+          }
+          var notification = new Notification(topic,options);
+        }
+        else if (Notification.permission !== 'denied') { // pero no tiene permiso
+          // Pedimos permiso
+          Notification.requestPermission(function (permission) {
+            // Si el usuario acepta, creamos notificación
+            if (permission === "granted") {
+              var options = {
+                body: payload
+              }
+              var notification = new Notification(topic,options);
+            }
+          });
+        
       })
-
-      client.publish("mqtt/demo", "hello world!")
+    client.publish("mqtt/demo", "Notificación enviada");
     </script>
   </body>
 </html>
