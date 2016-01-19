@@ -27,7 +27,7 @@
         // Comprobamos si existe
         if (!("Notification" in window)) {
           // Si no existe lo mandamos con toaster
-          //toastr.info([topic, payload].join(": "));
+          toastr.info([topic, payload].join(": "));
         }
         // Si existe...
         else if (Notification.permission === "granted") { // y tiene permiso
