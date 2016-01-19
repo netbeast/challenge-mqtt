@@ -1,5 +1,5 @@
 var mqtt    = require('mqtt');
-var client  = mqtt.connect('mqtt://test.mosquitto.org');
+var client  = mqtt.connect('ws://localhost:8000');
 
 client.subscribe("mqtt/demo");
 client.publish("mqtt/demo", "Test");
