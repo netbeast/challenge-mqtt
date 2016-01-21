@@ -25,6 +25,25 @@
 
       client.on("message", function(topic, payload) {
         toastr.success([topic, payload].join(": "))
+
+        var notification = null;
+        if(!('Notification' in window)){
+        //Here, we see if the navigator can with hte notifications
+        alert('El navegador no soporta las Notificaciones');
+         return;
+        }else if(Notification.permission === "granted"){
+        //If the client accept can received notifications then it is generate the new Notification
+        notification = new Notification([topic, payload].join(": "));
+       
+       }else if(Notification.permission !== 'denied'){
+       //If the client hasn't agreed to receive notifications
+       //then he will have the option of refusing to accept now.
+       Notification.requestPermission(function(permission) {
+       if (permission === "granted")
+       //We will generate a notification if he accept
+       notification = new Notification("Permiso por cliente aceptado" );
+                        });
+       }
       })
 
       client.publish("mqtt/demo", "hello world!")
